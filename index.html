@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Простой магазин</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <h1 class="logo">Простой магазин</h1>
+    <div id="userPanel" class="user-panel"><!-- рисуется из js/app.js --></div>
+  </header>
+
+  <div class="layout">
+    <main>
+      <div class="toolbar">
+        <input id="searchInput" type="search" placeholder="Поиск по названию…" autocomplete="off">
+        <button id="addProductBtn" class="btn btn-primary hidden" data-action="add-product">+ Добавить товар</button>
+      </div>
+      <section id="products" class="grid"><!-- карточки товаров --></section>
+    </main>
+
+    <aside class="log-panel">
+      <div class="log-head">
+        <h2>Журнал событий</h2>
+        <button class="btn btn-small" data-action="clear-log">Очистить</button>
+      </div>
+      <p class="log-hint">Каждое действие порождает событие. Здесь видно, какие события сработали и в каком порядке.</p>
+      <ul id="log" class="log"></ul>
+    </aside>
+  </div>
+
+  <!-- Вход / регистрация -->
+  <dialog id="authDialog">
+    <form id="authForm" autocomplete="off">
+      <h2 id="authTitle">Вход</h2>
+      <label>Логин <input name="username" required minlength="3" maxlength="20"></label>
+      <label>Пароль <input name="password" type="password" required minlength="4"></label>
+      <p id="authError" class="form-error"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn" data-action="close-dialog">Отмена</button>
+        <button type="submit" id="authSubmit" class="btn btn-primary">Войти</button>
+      </div>
+      <p class="switch-mode">
+        <a href="#" id="authSwitch" data-action="switch-auth"></a>
+      </p>
+    </form>
+  </dialog>
+
+  <!-- Редактирование товара (только админ) -->
+  <dialog id="productDialog">
+    <form id="productForm" autocomplete="off">
+      <h2 id="productFormTitle">Новый товар</h2>
+      <input type="hidden" name="id">
+      <label>Название <input name="name" required maxlength="60"></label>
+      <label>Описание <textarea name="description" rows="3" maxlength="300"></textarea></label>
+      <div class="row">
+        <label>Цена, ₽ <input name="price" type="number" min="0" step="1" required></label>
+        <label>Количество, шт. <input name="stock" type="number" min="0" step="1" required></label>
+      </div>
+      <label>Ссылка на фото <input name="imageUrl" placeholder="https://…"></label>
+      <label>…или загрузить файл <input name="imageFile" type="file" accept="image/*"></label>
+      <img id="imagePreview" class="preview" alt="Предпросмотр">
+      <p id="productError" class="form-error"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn" data-action="close-dialog">Отмена</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="toasts"></div>
+
+  <script src="js/events.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
